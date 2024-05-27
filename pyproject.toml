@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "gtk-editor"
+version = "0.1.0"
+description = "Simple demo app in GTK4 and LibAdwaita"
+authors = ["Lorenzo Drumond <drumondlorenzo@posteo.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pycairo = "1.26.0"
+pygobject = "3.48.2"
+pygobject-stubs = "2.11.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gtk-editor = "gtk_editor.__main__:run"
