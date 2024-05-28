@@ -1,10 +1,9 @@
-import math
 import gi
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk,  Gdk, GLib, Gio, Adw  # noqa
+from gi.repository import Gtk, Gio, Adw  # noqa
 
 # css_provider = Gtk.CssProvider()
 # css_provider.load_from_path("style.css")
@@ -19,12 +18,16 @@ class MainWindow(Gtk.ApplicationWindow):
         self.set_default_size(640, 480)
         self.set_title('gtk-editor')
 
-        self.box1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.set_child(self.box1)
+        self.box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_child(self.box)
+        self.set_editor()
+        self.set_buttons()
 
         self.header = Gtk.HeaderBar()
         self.set_titlebar(self.header)
+        self.set_headerbar()
 
+    def set_headerbar(self):
         menu = Gio.Menu.new()
         popover = Gtk.PopoverMenu()
         popover.set_menu_model(menu)
@@ -39,6 +42,24 @@ class MainWindow(Gtk.ApplicationWindow):
         self.add_action(action)
 
         menu.append("About", "win.about")
+
+    def set_editor(self):
+        scrolledWindow = Gtk.ScrolledWindow()
+        scrolledWindow.set_vexpand(True)
+        scrolledWindow.set_hexpand(True)
+        scrolledWindow.set_margin_start(5)
+        scrolledWindow.set_margin_end(5)
+        self.box.append(scrolledWindow)
+
+        self.text_view = Gtk.TextView()
+
+        self.text_buffer = self.text_view.get_buffer()
+        self.text_buffer.set_text("Hello World!")
+
+        scrolledWindow.set_child(self.text_view)
+
+    def set_buttons(self):
+        pass
 
     def show_about(self, action, param):
         dialog = Adw.AboutWindow(transient_for=self)
